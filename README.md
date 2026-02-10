@@ -1,20 +1,21 @@
 # cc-daily-report
 
-Claude Codeのセッション履歴を解析し、1日の作業内容をMarkdownレポートとして生成するプラグイン。
+Claude Codeのセッション履歴を解析し、1日の作業内容をMarkdownレポートとして生成する [Agent Skills](https://agentskills.io/) プラグイン。
 
 ## インストール
 
-### Claude Code プラグインとしてインストール
+### マーケットプレイスから
 
 ```bash
-claude /plugin install jun-suzuki1028/cc-daily-report
+/plugin marketplace add jun-suzuki1028/cc-daily-report
+/plugin install cc-daily-report@cc-daily-report
 ```
 
 ### ローカルインストール
 
 ```bash
 git clone https://github.com/jun-suzuki1028/cc-daily-report.git
-claude /plugin install /path/to/cc-daily-report
+/plugin install /path/to/cc-daily-report
 ```
 
 ## 依存関係
@@ -37,10 +38,10 @@ pip install pyyaml
 
 ## 設定
 
-`config.yml.example` をコピーして `config.yml` を作成してください。
+`skills/cc-daily-report/config.yml.example` をコピーして同ディレクトリに `config.yml` を作成してください。
 
 ```bash
-cp config.yml.example config.yml
+cp skills/cc-daily-report/config.yml.example skills/cc-daily-report/config.yml
 ```
 
 ### output_dir
@@ -178,13 +179,22 @@ output:
 
 ## ファイル構成
 
-| ファイル | 説明 |
-|----------|------|
-| `skills/cc-daily-report/SKILL.md` | スキル定義（実行手順・出力フォーマット） |
-| `scripts/parse_sessions.py` | セッション履歴パーサー |
-| `scripts/config.py` | 設定読み込みモジュール |
-| `config.yml.example` | 設定ファイルのテンプレート |
-| `config.yml` | ユーザー設定（要作成・gitignore対象） |
+```
+cc-daily-report/
+├── .claude-plugin/
+│   └── marketplace.json          # プラグインマニフェスト
+├── skills/
+│   └── cc-daily-report/
+│       ├── SKILL.md              # スキル定義（実行手順・出力フォーマット）
+│       ├── scripts/
+│       │   ├── parse_sessions.py # セッション履歴パーサー
+│       │   └── config.py        # 設定読み込みモジュール
+│       ├── config.yml.example    # 設定ファイルのテンプレート
+│       └── config.yml            # ユーザー設定（要作成・gitignore対象）
+├── .gitignore
+├── README.md
+└── LICENSE
+```
 
 ## License
 

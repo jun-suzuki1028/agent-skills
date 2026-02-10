@@ -1,0 +1,21 @@
+{
+  "name": "cc-daily-report",
+  "owner": {
+    "name": "jun-suzuki1028"
+  },
+  "metadata": {
+    "description": "Generate daily work reports from Claude Code session history",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "cc-daily-report",
+      "description": "Generate daily work reports from Claude Code session history. Parses session JSONL files, extracts metadata (commands, subagents, skills, prompts, tags), and produces a structured Markdown report with timeline.",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./skills/cc-daily-report"
+      ]
+    }
+  ]
+}
