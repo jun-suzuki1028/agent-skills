@@ -15,9 +15,11 @@ Claude Codeのセッション履歴を解析し、1日の作業内容をMarkdown
 
 - Python 3.11+（外部パッケージ不要。標準ライブラリの `tomllib` を使用）
 
-## 設定
+## 設定（オプション）
 
-`config.toml.example` をコピーして同ディレクトリに `config.toml` を作成してください。
+設定なしでそのまま使えます。レポートは `~/.claude/reports/` に出力され、タイムゾーンはシステム設定に従います。
+
+出力先やタグルールなどをカスタマイズしたい場合は、`config.toml.example` をコピーして編集してください。
 
 ```bash
 cp config.toml.example config.toml
