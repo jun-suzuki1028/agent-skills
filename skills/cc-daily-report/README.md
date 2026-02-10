@@ -110,5 +110,5 @@ cc-daily-report/
 │   ├── parse_sessions.py # セッション履歴パーサー
 │   └── config.py         # 設定読み込みモジュール
 ├── config.toml.example   # 設定ファイルのテンプレート
-└── config.toml           # ユーザー設定（要作成・gitignore対象）
+└── config.toml           # ユーザー設定（オプション）
 ```
