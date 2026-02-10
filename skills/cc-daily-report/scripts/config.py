@@ -11,7 +11,7 @@ from pathlib import Path
 
 DEFAULT_CONFIG = {
     # レポート保存先
-    "output_dir": "~/Documents/claude-reports",
+    "output_dir": "~/.claude/reports",
 
     # 除外プロジェクト（レポートに含めない）
     "exclude_projects": [],

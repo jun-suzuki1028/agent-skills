@@ -2,7 +2,7 @@
 # このファイルを config.toml にコピーして使用してください
 
 # レポート保存先
-output_dir = "~/Documents/claude-reports"
+output_dir = "~/.claude/reports"
 
 # タイムゾーン（例: "Asia/Tokyo", "America/New_York", "UTC"）
 # 未設定の場合はシステムのローカルタイムゾーンを使用

@@ -151,7 +151,7 @@ gantt
 
 ### 5. レポートの保存
 
-保存先は `config.toml` の `output_dir` を参照する。未設定の場合は `~/Documents/claude-reports` を使用。
+保存先は `config.toml` の `output_dir` を参照する。未設定の場合は `~/.claude/reports` を使用。
 
 ```
 {output_dir}/{日付}.md

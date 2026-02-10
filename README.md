@@ -44,7 +44,7 @@ cp skills/cc-daily-report/config.toml.example skills/cc-daily-report/config.toml
 レポートの保存先ディレクトリ。`~` はホームディレクトリに展開される。
 
 ```toml
-output_dir = "~/Documents/claude-reports"  # デフォルト
+output_dir = "~/.claude/reports"  # デフォルト
 ```
 
 変更すると、レポートファイル `{日付}.md` の出力先が変わる。
