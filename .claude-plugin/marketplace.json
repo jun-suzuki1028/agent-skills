@@ -1,10 +1,10 @@
 {
-  "name": "cc-daily-report",
+  "name": "claude-skills",
   "owner": {
     "name": "jun-suzuki1028"
   },
   "metadata": {
-    "description": "Generate daily work reports from Claude Code session history",
+    "description": "Collection of Claude Code skills",
     "version": "1.0.0"
   },
   "plugins": [

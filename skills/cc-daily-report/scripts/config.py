@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 設定ファイル読み込みモジュール
-cc-daily-report プラグインの config.toml から設定を読み込む
+cc-daily-report スキルの config.toml から設定を読み込む
 """
 
 import os
