@@ -1,4 +1,4 @@
-# claude-skills
+# jun-suzuki1028-skills
 
 Claude Code向けスキルコレクション。[Agent Skills](https://agentskills.io/) 仕様に準拠。
 
@@ -7,20 +7,20 @@ Claude Code向けスキルコレクション。[Agent Skills](https://agentskill
 ### マーケットプレイスから
 
 ```bash
-/plugin marketplace add jun-suzuki1028/claude-skills
+/plugin marketplace add jun-suzuki1028/jun-suzuki1028-skills
 ```
 
 利用可能なプラグイン一覧から選んでインストール:
 
 ```bash
-/plugin install cc-daily-report@claude-skills
+/plugin install cc-daily-report@jun-suzuki1028-skills
 ```
 
 ### ローカルインストール
 
 ```bash
-git clone https://github.com/jun-suzuki1028/claude-skills.git
-/plugin install /path/to/claude-skills
+git clone https://github.com/jun-suzuki1028/jun-suzuki1028-skills.git
+/plugin install /path/to/jun-suzuki1028-skills
 ```
 
 ## スキル一覧
