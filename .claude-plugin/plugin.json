@@ -1,0 +1,7 @@
+{
+  "name": "cc-daily-report",
+  "description": "Generate daily work reports from Claude Code session history",
+  "author": { "name": "jun-suzuki1028" },
+  "repository": "https://github.com/jun-suzuki1028/cc-daily-report",
+  "license": "MIT"
+}
