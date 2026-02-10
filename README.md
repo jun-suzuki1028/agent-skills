@@ -20,12 +20,7 @@ git clone https://github.com/jun-suzuki1028/cc-daily-report.git
 
 ## 依存関係
 
-- Python 3.10+
-- PyYAML（オプション）- `config.yml` を使用する場合に必要。未インストールの場合はデフォルト設定で動作
-
-```bash
-pip install pyyaml
-```
+- Python 3.11+（外部パッケージ不要。標準ライブラリの `tomllib` を使用）
 
 ## 使い方
 
@@ -38,18 +33,18 @@ pip install pyyaml
 
 ## 設定
 
-`skills/cc-daily-report/config.yml.example` をコピーして同ディレクトリに `config.yml` を作成してください。
+`skills/cc-daily-report/config.toml.example` をコピーして同ディレクトリに `config.toml` を作成してください。
 
 ```bash
-cp skills/cc-daily-report/config.yml.example skills/cc-daily-report/config.yml
+cp skills/cc-daily-report/config.toml.example skills/cc-daily-report/config.toml
 ```
 
 ### output_dir
 
 レポートの保存先ディレクトリ。`~` はホームディレクトリに展開される。
 
-```yaml
-output_dir: ~/Documents/claude-reports  # デフォルト
+```toml
+output_dir = "~/Documents/claude-reports"  # デフォルト
 ```
 
 変更すると、レポートファイル `{日付}.md` の出力先が変わる。
@@ -58,17 +53,16 @@ output_dir: ~/Documents/claude-reports  # デフォルト
 
 タイムスタンプの表示に使用するタイムゾーン。未設定の場合はシステムのローカルタイムゾーンを使用。
 
-```yaml
-timezone: Asia/Tokyo
+```toml
+timezone = "Asia/Tokyo"
 ```
 
 ### exclude_projects
 
 レポートから除外するプロジェクト名のリスト。部分一致で判定される。
 
-```yaml
-exclude_projects:
-  - .config
+```toml
+exclude_projects = [".config"]
 ```
 
 デフォルト: `[]`（除外なし）。追加すると該当プロジェクトのセッションがレポートに表示されなくなる。
@@ -77,10 +71,10 @@ exclude_projects:
 
 プロジェクト名の表示エイリアス。ディレクトリ名の代わりにわかりやすい名前を表示する。
 
-```yaml
-project_aliases:
-  my-api-server: "API サーバー"
-  frontend-app: "フロントエンド"
+```toml
+[project_aliases]
+my-api-server = "API サーバー"
+frontend-app = "フロントエンド"
 ```
 
 デフォルト: `{}`（エイリアスなし）。設定するとレポート内のプロジェクト名が置き換わる。
@@ -89,13 +83,14 @@ project_aliases:
 
 カスタムタグのルール。`pattern` に正規表現（大文字小文字を区別しない）、`tag` にタグ名を指定する。
 
-```yaml
-tags:
-  custom:
-    - pattern: "terraform|tf"
-      tag: "#Terraform"
-    - pattern: "docker|container"
-      tag: "#Docker"
+```toml
+[[tags.custom]]
+pattern = "terraform|tf"
+tag = "#Terraform"
+
+[[tags.custom]]
+pattern = "docker|container"
+tag = "#Docker"
 ```
 
 デフォルト: `[]`。追加すると、プロンプト内容がパターンにマッチした場合にそのタグが付与される。組み込みタグ（#Python, #AWS 等）より先に評価される。
@@ -104,11 +99,9 @@ tags:
 
 レポートに表示しないタグのリスト。
 
-```yaml
-tags:
-  exclude:
-    - "#Git"
-    - "#その他"
+```toml
+[tags]
+exclude = ["#Git", "#その他"]
 ```
 
 デフォルト: `[]`。追加すると該当タグがセッション・サマリーの両方から除外される。
@@ -117,9 +110,9 @@ tags:
 
 Mermaid Gantt図（タイムライン）をレポートに含めるか。
 
-```yaml
-output:
-  include_timeline: true  # デフォルト
+```toml
+[output]
+include_timeline = true  # デフォルト
 ```
 
 `false` にするとタイムラインセクションとパーサー出力の `timeline` フィールドが省略される。
@@ -128,18 +121,18 @@ output:
 
 セッションリンク情報を含めるか。
 
-```yaml
-output:
-  include_session_links: true  # デフォルト
+```toml
+[output]
+include_session_links = true  # デフォルト
 ```
 
 ### output.min_session_minutes
 
 レポートに含める最小セッション時間（分）。
 
-```yaml
-output:
-  min_session_minutes: 1  # デフォルト
+```toml
+[output]
+min_session_minutes = 1  # デフォルト
 ```
 
 値を大きくすると短いセッション（誤操作やちょっとした確認等）がレポートから除外される。`0` にすると全セッションを含める。
@@ -148,9 +141,9 @@ output:
 
 各セッションで出力するサンプルプロンプトの最大件数。
 
-```yaml
-output:
-  max_sample_prompts: 1  # デフォルト
+```toml
+[output]
+max_sample_prompts = 1  # デフォルト
 ```
 
 増やすとセッションあたりのプロンプト情報が増え、要約の精度が上がるがトークン消費も増える。
@@ -159,9 +152,9 @@ output:
 
 サンプルプロンプト1件あたりの最大文字数。超過分は `...` で切り詰められる。
 
-```yaml
-output:
-  max_prompt_length: 150  # デフォルト
+```toml
+[output]
+max_prompt_length = 150  # デフォルト
 ```
 
 増やすとプロンプトの全体像がわかりやすくなるがトークン消費が増える。
@@ -170,9 +163,9 @@ output:
 
 各セッションに付与するタグの最大数。
 
-```yaml
-output:
-  max_tags_per_session: 3  # デフォルト
+```toml
+[output]
+max_tags_per_session = 3  # デフォルト
 ```
 
 増やすとセッションごとの技術タグが増え、サマリーのタグ集計もより詳細になる。
@@ -189,8 +182,8 @@ cc-daily-report/
 │       ├── scripts/
 │       │   ├── parse_sessions.py # セッション履歴パーサー
 │       │   └── config.py        # 設定読み込みモジュール
-│       ├── config.yml.example    # 設定ファイルのテンプレート
-│       └── config.yml            # ユーザー設定（要作成・gitignore対象）
+│       ├── config.toml.example   # 設定ファイルのテンプレート
+│       └── config.toml           # ユーザー設定（要作成・gitignore対象）
 ├── .gitignore
 ├── README.md
 └── LICENSE

@@ -1,27 +1,17 @@
 #!/usr/bin/env python3
 """
 設定ファイル読み込みモジュール
-cc-daily-report プラグインの config.yml から設定を読み込む
+cc-daily-report プラグインの config.toml から設定を読み込む
 """
 
 import os
+import tomllib
 from pathlib import Path
-
-# PyYAMLがない環境でも動作するように
-try:
-    import yaml
-    HAS_YAML = True
-except ImportError:
-    HAS_YAML = False
 
 
 DEFAULT_CONFIG = {
     # レポート保存先
     "output_dir": "~/Documents/claude-reports",
-
-    # タイムゾーン（例: "Asia/Tokyo", "UTC"）
-    # 未設定の場合はシステムのローカルタイムゾーンを使用
-    "timezone": None,
 
     # 除外プロジェクト（レポートに含めない）
     "exclude_projects": [],
@@ -61,19 +51,14 @@ def deep_merge(base: dict, override: dict) -> dict:
 
 def load_config() -> dict:
     """設定ファイルを読み込む"""
-    config_path = Path(__file__).parent.parent / "config.yml"
+    config_path = Path(__file__).parent.parent / "config.toml"
 
     if not config_path.exists():
         return DEFAULT_CONFIG.copy()
 
-    if not HAS_YAML:
-        # YAMLがない場合はデフォルト設定を返す
-        return DEFAULT_CONFIG.copy()
-
     try:
-        with open(config_path, 'r', encoding='utf-8') as f:
-            import yaml as yaml_module
-            user_config = yaml_module.safe_load(f) or {}
+        with open(config_path, 'rb') as f:
+            user_config = tomllib.load(f)
         return deep_merge(DEFAULT_CONFIG, user_config)
     except Exception:
         return DEFAULT_CONFIG.copy()

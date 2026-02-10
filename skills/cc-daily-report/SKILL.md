@@ -2,7 +2,7 @@
 name: cc-daily-report
 description: Claude Codeの作業履歴から日次レポートを生成する。「日報」「今日の作業」「daily report」などで呼び出し可能。
 license: MIT
-compatibility: Requires Python 3.10+. PyYAML optional.
+compatibility: Requires Python 3.11+. No external dependencies.
 metadata:
   author: jun-suzuki1028
   version: "1.0.0"
@@ -151,7 +151,7 @@ gantt
 
 ### 5. レポートの保存
 
-保存先は `config.yml` の `output_dir` を参照する。未設定の場合は `~/Documents/claude-reports` を使用。
+保存先は `config.toml` の `output_dir` を参照する。未設定の場合は `~/Documents/claude-reports` を使用。
 
 ```
 {output_dir}/{日付}.md
@@ -161,8 +161,8 @@ gantt
 
 ## 設定ファイル
 
-`config.yml` でカスタマイズ可能（このスキルディレクトリ内に配置）。
-`config.yml.example` をコピーして作成する。各項目の詳細は README.md を参照。
+`config.toml` でカスタマイズ可能（このスキルディレクトリ内に配置）。
+`config.toml.example` をコピーして作成する。各項目の詳細は README.md を参照。
 
 ## 使用例
 

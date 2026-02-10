@@ -1,0 +1,50 @@
+# 日次レポート設定
+# このファイルを config.toml にコピーして使用してください
+
+# レポート保存先
+output_dir = "~/Documents/claude-reports"
+
+# タイムゾーン（例: "Asia/Tokyo", "America/New_York", "UTC"）
+# 未設定の場合はシステムのローカルタイムゾーンを使用
+# timezone = "Asia/Tokyo"
+
+# 除外プロジェクト（レポートに含めない）
+# プロジェクト名の部分一致で判定
+exclude_projects = [".config"]
+
+# プロジェクト名のエイリアス
+# レポート内で表示される名前を変更
+[project_aliases]
+my-api-server = "API サーバー"
+frontend-app = "フロントエンド"
+
+# タグ設定
+[tags]
+# 除外タグ（レポートに含めない）
+exclude = ["#その他"]
+
+# カスタムタグの追加
+# pattern: 正規表現パターン（大文字小文字を区別しない）
+# tag: マッチした場合に追加するタグ
+[[tags.custom]]
+pattern = "terraform|tf"
+tag = "#Terraform"
+
+[[tags.custom]]
+pattern = "docker|container"
+tag = "#Docker"
+
+# 出力設定
+[output]
+# タイムライン（Mermaid Gantt図）を含める
+include_timeline = true
+# 最小セッション時間（分）- これ以下のセッションは除外
+min_session_minutes = 1
+
+# トークン節約設定
+# 各セッションのサンプルプロンプト数（デフォルト: 1）
+max_sample_prompts = 1
+# プロンプトの最大文字数（デフォルト: 150）
+max_prompt_length = 150
+# 各セッションの最大タグ数（デフォルト: 3）
+max_tags_per_session = 3
