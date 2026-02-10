@@ -151,7 +151,7 @@ gantt
 
 ### 5. レポートの保存
 
-保存先は `config.toml` の `output_dir` を参照する。未設定の場合は `~/.claude/reports` を使用。
+保存先はデフォルトで `~/.claude/reports` を使用。`config.toml` が存在する場合は `output_dir` の値で上書きされる。
 
 ```
 {output_dir}/{日付}.md
@@ -161,8 +161,11 @@ gantt
 
 ## 設定ファイル
 
-`config.toml` でカスタマイズ可能（このスキルディレクトリ内に配置）。
-`config.toml.example` をコピーして作成する。各項目の詳細は README.md を参照。
+設定ファイルは不要。`config.toml` がなくてもデフォルト値で動作する。
+スクリプトが内部で `config.toml` の有無を判定し、存在すれば読み込む。
+**Claude が `config.toml` を直接 Read する必要はない。**
+
+カスタマイズしたい場合は `config.toml.example` をコピーして `config.toml` を作成する。各項目の詳細は README.md を参照。
 
 ## 使用例
 
