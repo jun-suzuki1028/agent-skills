@@ -162,7 +162,7 @@ python3 .claude/skills/image-redactor/scripts/redact.py process "<image_path>" -
 | 項目 | 仕様 |
 |------|------|
 | ファイル名 | `{元のファイル名}_redacted.{拡張子}` |
-| 保存先 | 元ファイルと同じディレクトリ（output-dir未指定時） |
+| 保存先 | 元ファイルの親ディレクトリ内の `redacted/` フォルダ（output-dir未指定時） |
 | 元ファイル | 変更しない |
 
 ---

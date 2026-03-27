@@ -145,12 +145,15 @@ def redact_image(
 
 
 def get_output_path(input_path: str, output_dir: str | None = None) -> str:
-    """Generate output file path with _redacted suffix."""
+    """Generate output file path with _redacted suffix in a dedicated folder."""
     p = Path(input_path)
     redacted_name = f"{p.stem}_redacted{p.suffix}"
     if output_dir:
-        return str(Path(output_dir) / redacted_name)
-    return str(p.parent / redacted_name)
+        out = Path(output_dir)
+    else:
+        out = p.parent / "redacted"
+    out.mkdir(parents=True, exist_ok=True)
+    return str(out / redacted_name)
 
 
 def process_image(
