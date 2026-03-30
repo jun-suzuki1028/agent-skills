@@ -4,23 +4,22 @@
     "name": "jun-suzuki1028"
   },
   "metadata": {
-    "description": "Claude Code用のスキルコレクション",
-    "pluginRoot": "./plugins"
+    "description": "Claude Code用のスキルコレクション"
   },
   "plugins": [
     {
       "name": "cc-bestpractice-check",
-      "source": "./cc-bestpractice-check",
+      "source": "./plugins/cc-bestpractice-check",
       "description": "Claude Code設定をベストプラクティスと比較しギャップをレポート"
     },
     {
       "name": "image-redactor",
-      "source": "./image-redactor",
+      "source": "./plugins/image-redactor",
       "description": "画像内の機密情報をOCRで検出し墨消し"
     },
     {
       "name": "spec-driven",
-      "source": "./spec-driven",
+      "source": "./plugins/spec-driven",
       "description": "プチ仕様駆動開発 - 4ドキュメント体制でPLAN→SPEC→TODO→実装をガイド"
     }
   ]
