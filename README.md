@@ -1,21 +1,21 @@
-# agent-skills
+# cc-plugins
 
-Claude Code用のスキルコレクションマーケットプレイスです。各スキルを個別にインストールできます。
+Claude Code用のプラグインマーケットプレイスです。各プラグインを個別にインストールできます。
 
 ## インストール
 
 ### 1. マーケットプレイスを追加
 
 ```
-/plugin marketplace add jun-suzuki1028/agent-skills
+/plugin marketplace add jun-suzuki1028/cc-plugins
 ```
 
 ### 2. プラグインを選んでインストール
 
 ```
-/plugin install cc-bestpractice-check@jun-suzuki1028-agent-skills
-/plugin install image-redactor@jun-suzuki1028-agent-skills
-/plugin install spec-driven@jun-suzuki1028-agent-skills
+/plugin install cc-bestpractice-check@jun-suzuki1028-cc-plugins
+/plugin install image-redactor@jun-suzuki1028-cc-plugins
+/plugin install spec-driven@jun-suzuki1028-cc-plugins
 ```
 
 ### ローカルから導入（開発用）
