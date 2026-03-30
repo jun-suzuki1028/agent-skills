@@ -1,0 +1,6 @@
+{
+  "name": "agent-skills",
+  "version": "1.0.0",
+  "description": "Claude Code用のスキルコレクション（ベスプラチェック、日報生成、画像墨消し等）",
+  "repository": "https://github.com/suzuki-jun/agent-skills"
+}
