@@ -1,7 +1,7 @@
 ---
 name: cc-bestpractice-check
-description: "This skill should be used when the user asks to \"ベスプラチェックして\", \"設定を監査して\", \"CLAUDE.mdを見直したい\", \"Claude Codeの設定がベスプラに沿っているか確認\", \"bestpractice check\", \"config audit\", \"設定チェック\". グローバル/プロジェクトのClaude Code設定をリファレンスリポジトリと比較し、ギャップと改善提案をレポートする。"
-version: 1.2.0
+description: "This skill should be used when the user asks to \"ベスプラチェックして\", \"ベストプラクティスチェック\", \"設定を監査して\", \"CLAUDE.mdを見直したい\", \"Claude Codeの設定がベストプラクティスに沿っているか確認\", \"設定チェック\", \"設定の見直し\", \"CLAUDE.mdのチェック\", \"CC設定の診断\". グローバル/プロジェクトのClaude Code設定を公式ドキュメントと比較し、ギャップと改善提案をレポートする。"
+version: 2.0.0
 user-invocable: true
 arguments:
   - name: project_path
@@ -11,18 +11,34 @@ arguments:
 
 # Best Practice Check
 
-[claude-code-best-practice](https://github.com/shanraisshan/claude-code-best-practice) リポジトリをリファレンスとして、ユーザーのClaude Code設定を比較し、ギャップと改善提案をレポートする。
+Anthropic公式ドキュメント（code.claude.com）をリファレンスとして、ユーザーのClaude Code設定を比較し、ギャップと改善提案をレポートする。
 
 ## ランタイム変数
 
-- `$CLAUDE_PLUGIN_ROOT` — このスキルが属するプラグインのルートディレクトリ。Claude Codeランタイムが自動設定する
 - `$ARGUMENTS` — ユーザーがスキル呼び出し時に渡した引数文字列
 
-## 定数
+## 公式ドキュメントURL
 
-- **リファレンスリポジトリ**: `${CLAUDE_PLUGIN_ROOT}/reference/claude-code-best-practice/`
-- **グローバル設定**: `~/.claude/`
-- **ベスプラドキュメント**: リファレンスリポジトリ内の `best-practice/`, `tips/`, `implementation/`, `reports/`
+ベストプラクティスの参照元として、以下の公式ドキュメントを WebFetch で取得する。
+`.md` 拡張子付きURLを使用すること（HTMLタグが含まれず効率的）。
+
+| カテゴリ | URL |
+|---------|-----|
+| Best Practices（総合） | `https://code.claude.com/docs/en/best-practices.md` |
+| CLAUDE.md | `https://code.claude.com/docs/en/memory.md` |
+| Settings | `https://code.claude.com/docs/en/settings.md` |
+| Hooks | `https://code.claude.com/docs/en/hooks-guide.md` |
+| Skills | `https://code.claude.com/docs/en/skills.md` |
+| Subagents | `https://code.claude.com/docs/en/sub-agents.md` |
+| MCP | `https://code.claude.com/docs/en/mcp.md` |
+| Commands | `https://code.claude.com/docs/en/slash-commands.md` |
+| Plugins | `https://code.claude.com/docs/en/plugins.md` |
+| Permissions | `https://code.claude.com/docs/en/permissions.md` |
+| .claudeディレクトリ構造 | `https://code.claude.com/docs/en/claude-directory.md` |
+| Permission modes / Sandboxing | `https://code.claude.com/docs/en/permission-modes.md` |
+| Status line | `https://code.claude.com/docs/en/statusline.md` |
+| GitHub Actions / CI | `https://code.claude.com/docs/en/github-actions.md` |
+| Environment variables | `https://code.claude.com/docs/en/env-vars.md` |
 
 ## 重要ルール: スコープの厳密な分離
 
@@ -49,10 +65,6 @@ arguments:
 | **[参考]** | 未利用の機能 | 有益そうな機能・パターンの情報提供。導入を強く勧めない |
 | *(省略)* | 未利用かつ関連性の薄い機能 | レポートに含めない |
 
-## Phase 0: セットアップ
-
-`scripts/setup-reference.sh` を Bash ツールで実行し、リファレンスリポジトリを最新化する。
-
 ## Phase 1: チェック対象の決定
 
 ### 引数ありの場合
@@ -77,10 +89,13 @@ AskUserQuestion ツールでユーザーに確認する:
 |------|------|
 | CLAUDE.md | `~/.claude/CLAUDE.md` |
 | Settings | `~/.claude/settings.json` |
+| Settings (local) | `~/.claude/settings.local.json` |
 | Hooks | `~/.claude/hooks/` 配下のファイル一覧と内容 |
 | Commands | `~/.claude/commands/` 配下のファイル一覧 |
 | Agents | `~/.claude/agents/` 配下のファイル一覧 |
 | Skills | `~/.claude/skills/` 配下のディレクトリ一覧 |
+| Plugins | `~/.claude/plugins/` 配下のディレクトリ一覧 |
+| .claudeディレクトリ全体 | `~/.claude/` のディレクトリ構造 |
 
 ### プロジェクト設定（対象プロジェクトが指定された場合のみ）
 
@@ -88,35 +103,45 @@ AskUserQuestion ツールでユーザーに確認する:
 |------|------|
 | CLAUDE.md | `{project}/.claude/CLAUDE.md` または `{project}/CLAUDE.md` |
 | Settings | `{project}/.claude/settings.json` |
+| Settings (local) | `{project}/.claude/settings.local.json` |
 | Commands | `{project}/.claude/commands/` |
 | Agents | `{project}/.claude/agents/` |
+| Skills | `{project}/.claude/skills/` |
 | MCP設定 | `{project}/.mcp.json` |
+| GitHub Actions | `{project}/.github/workflows/` 内のClaude Code関連ワークフロー |
+| .claudeディレクトリ全体 | `{project}/.claude/` のディレクトリ構造 |
 
 ## Phase 3: プロジェクトの実態把握
 
 プロジェクトが指定された場合、設定収集後にプロジェクトの実態を把握する:
 
-- どの技術スタックを使っているか（CLAUDE.mdやpackage.json等から判断）
-- どの機能を実際に利用しているか（MCP、hooks、commands、agents等）
+- どの技術スタックを使っているか（CLAUDE.md、package.json、pyproject.toml、Cargo.toml、go.mod、pom.xml等から判断）
+- どの機能を実際に利用しているか（MCP、hooks、commands、agents、skills等）
 - 利用状況に応じて「重要度の分類」テーブルのラベルを適用する
 
-## Phase 4: ベストプラクティス読み込みと比較
+## Phase 4: 公式ドキュメント取得と比較
 
-カテゴリごとにリファレンスリポジトリの該当文書を読み、ユーザー設定と**意味的に**比較する。
+チェック対象の利用状況に基づき、関連する公式ドキュメントのみを WebFetch で取得し、ユーザー設定と**意味的に**比較する。
 完全一致を求めるのではなく、**欠落しているベストプラクティスや改善余地**を検出する。
 
 ### チェックカテゴリと参照元
 
-| カテゴリ | リファレンス内の参照先 |
-|---------|----------------------|
-| CLAUDE.md構成・メモリ管理 | `best-practice/claude-memory.md`, `reports/claude-agent-memory.md` |
-| Settings設定 | `best-practice/claude-settings.md`, `reports/claude-global-vs-project-settings.md` |
-| Hooks活用 | `best-practice/` 内のhook関連, `.claude/hooks/` |
-| Commands活用 | `best-practice/claude-commands.md`, `implementation/claude-commands-implementation.md` |
-| Subagents活用 | `best-practice/claude-subagents.md`, `implementation/claude-subagents-implementation.md` |
-| Skills活用 | `best-practice/claude-skills.md`, `implementation/claude-skills-implementation.md` |
-| MCP設定 | `best-practice/claude-mcp.md` |
-| 実践Tips | `tips/` 配下の全ファイル |
+| カテゴリ | 取得する公式ドキュメント | 検証対象 |
+|---------|----------------------|---------|
+| 総合（必須取得） | Best Practices | — |
+| .claudeディレクトリ構造 | .claudeディレクトリ構造 | ディレクトリ構成が推奨パターンに沿っているか |
+| CLAUDE.md構成・メモリ管理 | CLAUDE.md | 配置場所、内容の簡潔さ、@importの活用 |
+| Settings設定 | Settings, Permissions | グローバル/プロジェクト分離、permission rules |
+| Permission modes / Sandboxing | Permission modes / Sandboxing | auto mode、sandbox設定の有無 |
+| Hooks活用 | Hooks | フォーマッタ・リンター等の自動化設定 |
+| Commands活用 | Commands | カスタムコマンドの有無と構成 |
+| Subagents活用 | Subagents | カスタムエージェントの有無と構成 |
+| Skills活用 | Skills | スキルの有無と構成 |
+| MCP設定 | MCP | MCP接続の有無と構成 |
+| Plugins活用 | Plugins | プラグインの有無 |
+| Status line | Status line | コンテキスト監視用ステータスライン設定 |
+| GitHub Actions / CI | GitHub Actions / CI | Claude Code CI連携の設定有無 |
+| Environment variables | Environment variables | 推奨env var設定 |
 
 ### 比較の観点
 
@@ -128,7 +153,8 @@ AskUserQuestion ツールでユーザーに確認する:
 
 ### トークン節約
 
-- リファレンスの全文は読まない。カテゴリごとに必要なファイルだけ Read する
+- 全ドキュメントを一括取得しない。利用中の機能に関連するドキュメントのみ WebFetch する
+- Best Practices（総合）は必ず取得し、他はユーザーの利用状況に応じて取得する
 - ユーザー設定もファイル一覧から必要なものだけ読む
 - 問題なしの項目はレポートから省略する
 
@@ -142,17 +168,17 @@ AskUserQuestion ツールでユーザーに確認する:
 ## cc-bestpractice-check レポート
 
 **対象**: {プロジェクト名}（プロジェクトスコープ）
-**リファレンス**: claude-code-best-practice (commit: {hash}, {date})
+**リファレンス**: Claude Code公式ドキュメント（code.claude.com）
 
 ---
 
 ### プロジェクト Settings
 - **[GAP]** {ギャップの説明}
   - **提案**: {具体的な修正内容}
-  - **参照**: {リファレンス内の該当ファイル}
+  - **参照**: {公式ドキュメントURL}
 - **[推奨]** {推奨事項の説明}
   - **提案**: {具体的な修正内容}
-  - **参照**: {リファレンス内の該当ファイル}
+  - **参照**: {公式ドキュメントURL}
 
 ### プロジェクト CLAUDE.md
 ...
@@ -177,7 +203,7 @@ AskUserQuestion ツールでユーザーに確認する:
 ## cc-bestpractice-check レポート
 
 **対象**: グローバル設定
-**リファレンス**: claude-code-best-practice (commit: {hash}, {date})
+**リファレンス**: Claude Code公式ドキュメント（code.claude.com）
 
 ---
 
