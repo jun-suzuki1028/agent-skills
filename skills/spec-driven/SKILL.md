@@ -1,17 +1,8 @@
 ---
 name: spec-driven
-description: "プチ仕様駆動開発 - 4ドキュメント体制でタスクを管理。PLAN→SPEC→TODO→実装の流れをガイドする。"
-license: MIT
-compatibility: No dependencies. Works with any project.
-metadata:
-  author: jun-suzuki1028
-  version: "1.0.0"
-  references:
-    - title: "Claude Codeで「プチ仕様駆動開発」のススメ"
-      url: "https://qiita.com/minorun365/items/114f53def8cb0db60f47"
-      author: minorun365
-user_invocable: true
-trigger: "spec-driven, 仕様駆動, 4ドキュメント初期化, spec init"
+description: "プチ仕様駆動開発 - 4ドキュメント体制でタスクを管理。PLAN→SPEC→TODO→実装の流れをガイドする。「spec-driven」「仕様駆動」「4ドキュメント初期化」「spec init」で起動。"
+version: "1.0.0"
+user-invocable: true
 ---
 
 # プチ仕様駆動開発 - 4ドキュメント駆動ワークフロー

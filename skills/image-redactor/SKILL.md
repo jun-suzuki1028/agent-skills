@@ -2,6 +2,7 @@
 name: image-redactor
 version: 1.0.0
 description: "This skill should be used when the user asks to '画像を墨消し', 'redact image', 'アカウントIDを隠す', '画像のマスキング', '個人名を消す', 'black out sensitive info', 'スクリーンショットの墨消し', '画像から個人情報を消す', 'mask PII in screenshot', '情報を隠す', or mentions redacting, masking, or hiding AWS account IDs, personal names, IP addresses, or sensitive text from images."
+user-invocable: true
 ---
 
 # Image Redactor
@@ -66,12 +67,12 @@ pip3 install pytesseract Pillow
 
 **単一ファイルの場合:**
 ```bash
-python3 .claude/skills/image-redactor/scripts/redact.py review "<image_path>"
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/image-redactor/scripts/redact.py review "<image_path>"
 ```
 
 **キーワード指定ありの場合:**
 ```bash
-python3 .claude/skills/image-redactor/scripts/redact.py review "<image_path>" --keywords "鈴木" "MyProduct"
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/image-redactor/scripts/redact.py review "<image_path>" --keywords "鈴木" "MyProduct"
 ```
 
 `review` コマンドは以下の3カテゴリに分類したJSONを返す:
@@ -113,29 +114,29 @@ python3 .claude/skills/image-redactor/scripts/redact.py review "<image_path>" --
 
 **方法A: 自動検出+キーワードで一括処理（最も一般的）:**
 ```bash
-python3 .claude/skills/image-redactor/scripts/redact.py process "<image_path>" --keywords "鈴木" "MyProduct"
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/image-redactor/scripts/redact.py process "<image_path>" --keywords "鈴木" "MyProduct"
 ```
 
 **方法B: キーワードなし（自動検出のみ）:**
 ```bash
-python3 .claude/skills/image-redactor/scripts/redact.py process "<image_path>"
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/image-redactor/scripts/redact.py process "<image_path>"
 ```
 
 **方法C: 特定領域のみ選択的に墨消し（ユーザーが一部を除外/追加した場合）:**
 
 `review` コマンドの出力から、ユーザーが承認した領域の座標をJSON配列で渡す:
 ```bash
-python3 .claude/skills/image-redactor/scripts/redact.py redact "<image_path>" --regions '[{"x":10,"y":20,"w":100,"h":30},{"x":200,"y":50,"w":150,"h":25}]'
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/image-redactor/scripts/redact.py redact "<image_path>" --regions '[{"x":10,"y":20,"w":100,"h":30},{"x":200,"y":50,"w":150,"h":25}]'
 ```
 
 **フォルダ一括の場合:**
 ```bash
-python3 .claude/skills/image-redactor/scripts/redact.py batch "<folder_path>" --keywords "鈴木" "MyProduct"
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/image-redactor/scripts/redact.py batch "<folder_path>" --keywords "鈴木" "MyProduct"
 ```
 
 **出力先を指定する場合（いずれのコマンドでも使用可）:**
 ```bash
-python3 .claude/skills/image-redactor/scripts/redact.py process "<image_path>" --output-dir "<output_dir>"
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/image-redactor/scripts/redact.py process "<image_path>" --output-dir "<output_dir>"
 ```
 
 ### Phase 5: 目視検証と自動補正
@@ -156,7 +157,7 @@ python3 .claude/skills/image-redactor/scripts/redact.py process "<image_path>" -
 # 元のreview結果の座標 + 補正値で再実行
 # 漏れがある場合: 該当領域のw/hを拡大、またはx/yをずらす
 # 過剰な場合: 該当領域を除外
-python3 .claude/skills/image-redactor/scripts/redact.py redact "<元画像パス>" --regions '[補正済みの全領域JSON]' --output-dir "<出力先>"
+python3 ${CLAUDE_PLUGIN_ROOT}/skills/image-redactor/scripts/redact.py redact "<元画像パス>" --regions '[補正済みの全領域JSON]' --output-dir "<出力先>"
 ```
 
 補正の目安:

@@ -1,0 +1,13 @@
+{
+  "name": "agent-skills",
+  "owner": {
+    "name": "jun-suzuki1028"
+  },
+  "plugins": [
+    {
+      "name": "agent-skills",
+      "source": ".",
+      "description": "Claude Code用のスキルコレクション（ベスプラチェック、日報生成、画像墨消し等）"
+    }
+  ]
+}
