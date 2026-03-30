@@ -1,45 +1,39 @@
 # agent-skills
 
-Claude Code用のスキルコレクションプラグインです。
+Claude Code用のスキルコレクションマーケットプレイスです。各スキルを個別にインストールできます。
 
 ## インストール
 
-### GitHub から導入
-
-1. マーケットプレイスを追加
+### 1. マーケットプレイスを追加
 
 ```
 /plugin marketplace add jun-suzuki1028/agent-skills
 ```
 
-2. プラグインをインストール
+### 2. プラグインを選んでインストール
 
 ```
-/plugin install agent-skills@jun-suzuki1028-agent-skills
+/plugin install cc-bestpractice-check@jun-suzuki1028-agent-skills
+/plugin install image-redactor@jun-suzuki1028-agent-skills
+/plugin install spec-driven@jun-suzuki1028-agent-skills
 ```
 
-### ローカルから導入
+### ローカルから導入（開発用）
 
 ```
-claude --plugin-dir /path/to/agent-skills
+claude --plugin-dir ./plugins/cc-bestpractice-check
+claude --plugin-dir ./plugins/image-redactor
+claude --plugin-dir ./plugins/spec-driven
 ```
 
 ### インタラクティブUI
 
 `/plugin` を実行すると対話的にプラグインを管理できます。
 
-## インストール後
+## プラグイン一覧
 
-プラグインを有効化した後、変更を反映するには以下を実行します。
-
-```
-/reload-plugins
-```
-
-## スキル一覧
-
-| スキル | 説明 |
-|--------|------|
-| [cc-bestpractice-check](skills/cc-bestpractice-check/) | Claude Code設定をベストプラクティスと比較しギャップをレポート |
-| [image-redactor](skills/image-redactor/) | 画像内の機密情報をOCRで検出し墨消し |
-| [spec-driven](skills/spec-driven/) | プチ仕様駆動開発 - 4ドキュメント体制でPLAN→SPEC→TODO→実装をガイド |
+| プラグイン | 説明 |
+|-----------|------|
+| [cc-bestpractice-check](plugins/cc-bestpractice-check/) | Claude Code設定をベストプラクティスと比較しギャップをレポート |
+| [image-redactor](plugins/image-redactor/) | 画像内の機密情報をOCRで検出し墨消し |
+| [spec-driven](plugins/spec-driven/) | プチ仕様駆動開発 - 4ドキュメント体制でPLAN→SPEC→TODO→実装をガイド |

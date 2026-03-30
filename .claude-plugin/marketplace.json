@@ -3,11 +3,25 @@
   "owner": {
     "name": "jun-suzuki1028"
   },
+  "metadata": {
+    "description": "Claude Code用のスキルコレクション",
+    "pluginRoot": "./plugins"
+  },
   "plugins": [
     {
-      "name": "agent-skills",
-      "source": "./",
-      "description": "Claude Code用のスキルコレクション（ベスプラチェック、画像墨消し、仕様駆動開発等）"
+      "name": "cc-bestpractice-check",
+      "source": "./cc-bestpractice-check",
+      "description": "Claude Code設定をベストプラクティスと比較しギャップをレポート"
+    },
+    {
+      "name": "image-redactor",
+      "source": "./image-redactor",
+      "description": "画像内の機密情報をOCRで検出し墨消し"
+    },
+    {
+      "name": "spec-driven",
+      "source": "./spec-driven",
+      "description": "プチ仕様駆動開発 - 4ドキュメント体制でPLAN→SPEC→TODO→実装をガイド"
     }
   ]
 }

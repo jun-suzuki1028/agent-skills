@@ -1,0 +1,9 @@
+{
+  "name": "spec-driven",
+  "version": "1.0.0",
+  "description": "プチ仕様駆動開発 - 4ドキュメント体制でPLAN→SPEC→TODO→実装をガイド",
+  "author": {
+    "name": "jun-suzuki1028"
+  },
+  "license": "MIT"
+}

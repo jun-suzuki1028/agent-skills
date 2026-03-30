@@ -1,0 +1,9 @@
+{
+  "name": "image-redactor",
+  "version": "1.0.0",
+  "description": "画像内の機密情報をOCRで検出し墨消し",
+  "author": {
+    "name": "jun-suzuki1028"
+  },
+  "license": "MIT"
+}

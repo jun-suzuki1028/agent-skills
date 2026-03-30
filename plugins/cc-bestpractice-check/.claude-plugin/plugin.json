@@ -1,0 +1,9 @@
+{
+  "name": "cc-bestpractice-check",
+  "version": "1.2.0",
+  "description": "Claude Code設定をベストプラクティスと比較しギャップをレポート",
+  "author": {
+    "name": "jun-suzuki1028"
+  },
+  "license": "MIT"
+}
