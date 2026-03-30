@@ -138,10 +138,37 @@ python3 .claude/skills/image-redactor/scripts/redact.py batch "<folder_path>" --
 python3 .claude/skills/image-redactor/scripts/redact.py process "<image_path>" --output-dir "<output_dir>"
 ```
 
-### Phase 5: 結果確認
+### Phase 5: 目視検証と自動補正
 
-1. 生成された `_redacted` ファイルをReadツールで表示し、墨消し結果をユーザーに見せる
-2. 問題があれば追加のキーワードを指定して再実行
+墨消し後の画像をReadツールで読み込み、以下の観点でClaudeが目視検証する。
+
+**チェック観点:**
+1. **漏れ**: 墨消し対象のテキスト（アカウントID、IP等）が黒矩形の端から一部見えていないか
+2. **過剰**: 墨消し不要なテキストまで隠されていないか
+3. **位置ずれ**: 黒矩形がテキストからずれて意味をなしていないか
+
+**問題が見つかった場合の補正:**
+
+問題のある領域を特定し、座標を調整して `redact` コマンドで再墨消しする。
+入力は元画像（redacted版ではない）を使い、全領域を再適用する。
+
+```bash
+# 元のreview結果の座標 + 補正値で再実行
+# 漏れがある場合: 該当領域のw/hを拡大、またはx/yをずらす
+# 過剰な場合: 該当領域を除外
+python3 .claude/skills/image-redactor/scripts/redact.py redact "<元画像パス>" --regions '[補正済みの全領域JSON]' --output-dir "<出力先>"
+```
+
+補正の目安:
+- 文字が端から見えている → その領域の `w` または `h` を10〜20px拡大、または `x`/`y` を5〜10pxずらす
+- 隠しすぎ → 該当領域の `w`/`h` を縮小、または領域自体を除外
+
+**補正後、再度Readツールで確認し、問題がなくなるまで繰り返す（最大3回）。**
+
+### Phase 6: ユーザーへの最終報告
+
+1. 最終的な `_redacted` ファイルをユーザーに見せる
+2. 補正を行った場合はその内容（どの領域をどう調整したか）を報告する
 
 ---
 
